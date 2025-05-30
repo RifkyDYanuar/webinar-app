@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamController;
+use App\Models\Member;
+use App\Http\Controllers\MemberController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +17,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
     Route::resource('team', TeamController::class);
+    Route::resource('member', MemberController::class);
+    Route::post('/simpan-member/{param}',[MemberController::class,'simpan'])->name('simpan-member');
 });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,7 @@ class TeamController extends Controller
         $request->validate([
             'nama_team' => 'required|string|max:255',
         ]);
+       
         Team::create($teamsdata);
         return redirect()->route('team.index')->with('success', 'Team created successfully.');
 
@@ -44,7 +46,8 @@ class TeamController extends Controller
     public function show($id)
     {
         $data = Team::findOrFail($id);
-        return view('team.detail', compact('data'));
+         $member = Member::where('team_id', $id)->get()->all();
+        return view('team.detail', compact('data', 'member'));
     }
 
     /**
